@@ -20,7 +20,6 @@ public class VagaController {
 
     @GetMapping("/cadastrarVaga")
     public String form(){
-
         return "vaga/formVaga"; //retorna uma view de cadastro de vagas
     }
 
@@ -96,6 +95,25 @@ public class VagaController {
         Vaga vaga = candidato.getVaga();
         String codigo = "" + vaga.getCodigo();
         cr.delete(candidato);
+        return "redirect:/{codigo}";
+    }
+
+    //ATUALIZAR VAGAS
+
+    @GetMapping("/editar-vaga")
+    public ModelAndView editarVaga(long codigo){
+        Vaga vaga = vr.findByCodigo(codigo);
+        ModelAndView mv = new ModelAndView("vaga/editarVaga");
+        mv.addObject("vaga", vaga);
+        return mv;
+    }
+
+    @PostMapping("/editar-vaga")
+    public String atualizarVaga(@Valid Vaga vaga, BindingResult result, RedirectAttributes attributes){
+        vr.save(vaga);
+        attributes.addFlashAttribute("success", "Vaga atualizada com sucesso");
+        long codigoLong = vaga.getCodigo();
+        String codigo = "" + codigoLong;
         return "redirect:/{codigo}";
     }
 
