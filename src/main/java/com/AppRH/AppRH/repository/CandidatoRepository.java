@@ -10,6 +10,6 @@ public interface CandidatoRepository extends CrudRepository<Candidato, String> {
     Iterable<Candidato> findByVaga(Vaga vaga);
     Candidato findByRg(String rg);
     Candidato findById(int id);
-    List<Candidato> findByNome(String nome);
+    List<Candidato> findByNomeCandidato(String nome);
 
 }
